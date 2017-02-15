@@ -1,12 +1,10 @@
-#![feature(use_extern_macros)]
-
 use mysql::{OptsBuilder, Pool};
-use json;
 
 /*******************************************************/
 /************** Creating a Pool Connection ************/
 /*****************************************************/
 
+// expand to allow for more options
 #[allow(dead_code)]
 pub fn build_pool(
     hostname: &str,

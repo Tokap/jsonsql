@@ -2,6 +2,6 @@
 extern crate json;
 extern crate mysql;
 
-mod read;
-mod write;
-mod pool;
+pub mod read;
+pub mod write;
+pub mod pool;

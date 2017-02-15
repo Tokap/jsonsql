@@ -1,4 +1,4 @@
-use mysql::{OptsBuilder, Pool, QueryResult};
+use mysql::{Pool};
 use json;
 
 /*******************************************************/
@@ -121,5 +121,14 @@ pub fn json_write_to_table(
     pool: Pool) -> Result<SqlWriteReturn, String> {
 
         let sql: String = simple_json_insert(table, params);
+        write_to_table(sql, pool)
+}
+
+#[allow(dead_code)]
+pub fn raw_write_to_table(
+    table: String,
+    sql: String,
+    pool: Pool) -> Result<SqlWriteReturn, String> {
+
         write_to_table(sql, pool)
 }
