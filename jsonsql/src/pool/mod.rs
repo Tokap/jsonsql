@@ -1,8 +1,10 @@
-use mysql::{OptsBuilder, Pool};
+use mysql;
 
 /*******************************************************/
 /************** Creating a Pool Connection ************/
 /*****************************************************/
+
+pub type Pool = mysql::Pool;
 
 // expand to allow for more options
 #[allow(dead_code)]
@@ -12,7 +14,7 @@ pub fn build_pool(
     user: &str,
     port: u16) -> Pool {
 
-        let mut builder = OptsBuilder::new();
+        let mut builder = mysql::OptsBuilder::new();
         builder
             .ip_or_hostname(Some(hostname))
             .tcp_port(port)
