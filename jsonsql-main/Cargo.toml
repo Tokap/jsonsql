@@ -1,0 +1,8 @@
+[package]
+name = "jsonsql-main"
+version = "0.1.0"
+authors = ["Patrick Allen <allenpatrick86@gmail.com>"]
+
+[dependencies]
+mysql = "*"
+json  = "*"
