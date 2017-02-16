@@ -50,7 +50,8 @@ The list of available options for Pool config when passing them through JSON are
 ```rust
 use jsonsql::pool::{Pool, build_basic_pool};
 
-let json_string: String = String::from(r#" { "hostname": "127.0.0.1",
+let json_string: String = String::from(
+                          r#" { "hostname": "127.0.0.1",
                                 "db": "my_database",
                                 "user": "some_user",
                                 "password": "mediocre_password"  
@@ -153,11 +154,12 @@ use jsonsql::pool::{Pool, build_basic_pool};
 use jsonsql::write::{json_write_to_table};
 
 let table: String = String::from("account_data");
-let json_string: String = String::from(r#" {
+let json_string: String = String::from(
+                                      r#" {
                                       "first_name": "bob",
                                       "last_name": "smith",
                                       "age": "25" } "#);
-                                      
+
 let simple_pool: Pool = build_basic_pool("some_hostname", "my_database", "user", "password", 3306);
 let return_value: Result<SqlWriteReturn, String> = json_write_to_table(json_string, table, simple_pool);
 
