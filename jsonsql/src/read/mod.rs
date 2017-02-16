@@ -112,7 +112,7 @@ pub fn get_by_two_params(
         get_by_raw(sql, pool)
 }
 
-pub fn get_json_by_id(
+pub fn get_by_id(
   search_value: &str,
   table: &str,
   pool: Pool,) -> Result<String, String> {

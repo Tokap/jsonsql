@@ -67,7 +67,7 @@ let pool_from_json: Pool = build_pool_json(json_string);
 There are currently 4 methods to read from the Database using this library. They are:
 - `get_by_param` -> takes 4 parameters: a search key (i.e 'name'), a search value (i.e. 'bob'), and a table as &str + a pool connection.
 - `get_by_two_params` -> takes 4 parameters: two key/value tuples of &str, a table as &str + a pool connection.
-- `get_json_by_id` -> a common query request. It takes 3 parameters - the id and table as &str + a pool connection.
+- `get_by_id` -> a common query request. It takes 3 parameters - the id and table as &str + a pool connection.
 - `get_by_raw` -> takes a raw MySQL Select statement as a String + a pool connection. Executes the raw statement assuming proper syntax.
 
 **Get By Param:**
@@ -98,10 +98,10 @@ println!("My Outcome Looks Like: {}", return_value.unwrap());`
 **Get By Id:**
 ```rust
 use jsonsql::pool::{Pool, build_basic_pool};
-use jsonsql::read::{get_json_by_id};
+use jsonsql::read::{get_by_id};
 
 let simple_pool: Pool = build_basic_pool("some_hostname", "my_database", "user", "password", 3306);
-let return_value: Result<String, String> = get_json_by_id("2", "account_data", simple_pool);
+let return_value: Result<String, String> = get_by_id("2", "account_data", simple_pool);
 
 println!("My Outcome Looks Like: {}", return_value.unwrap());`
 // "[{"id":"2","name":"jerry","address":"456 Front Street"}]"
