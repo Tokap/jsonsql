@@ -118,9 +118,9 @@ println!("My Outcome Looks Like: {}", return_value.unwrap());
 ## Write Information:
 
 There are currently 3 primary methods to write to a Database using this library. They are:
-- `vec_write_to_table` -> takes a Vector of Tuples (String, String) containing key/value pairs to write to table, a table ( as a String ) + a pool connection.
-- `json_write_to_table` -> takes a JSON String containing key/value pairs to write, a table ( as a String ), + a pool connection.
-- `raw_write_to_table` -> takes a raw MySQL Insert statement ( as a String ) + a pool connection. Executes the raw statement assuming proper syntax.
+- `vec_write_to_table` -> takes a Vector of Tuples (String, String) containing key/value pairs, a table name as a String + a pool connection. Tuples should include all required fields for an insert statement.
+- `json_write_to_table` -> takes a JSON String containing key/value pairs with the same requirement as above, a table name as a String + a pool connection.
+- `raw_write_to_table` -> takes a raw MySQL Insert statement as a String + a pool connection. Executes the raw statement assuming proper syntax.
 
 **Using a Vec to Write to Table:**
 ```rust
