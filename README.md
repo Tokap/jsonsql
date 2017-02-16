@@ -58,7 +58,7 @@ There are currently 4 methods to read from the Database using this library. They
 - get_json_by_id -> a common query request. It takes 3 parameters - the id and table as &str + a pool connection.
 - get_by_raw -> takes a raw MySQL Select statement ( as a String ) and a pool connection. Executes the raw statement assuming proper syntax.
 
-Get By Param:
+**Get By Param:**
 ```rust
 use jsonsql::pool::{Pool, build_basic_pool};
 use jsonsql::read::{get_by_param};
@@ -70,7 +70,7 @@ let return_value: Result<String, String> = get_by_param("name", "bob", "account_
 println!("My Outcome Looks Like: {}", return_value.unwrap());
 ```
 
-Get By Two Params:
+**Get By Two Params:**
 ```rust
 use jsonsql::pool::{Pool, build_basic_pool};
 use jsonsql::read::{get_by_two_params};
@@ -81,7 +81,7 @@ let return_value: Result<String, String> = get_by_two_params(("name", "bob"),("i
 println!("My Outcome Looks Like: {}", return_value.unwrap());`
 ```
 
-Get By Id:
+**Get By Id:**
 ```rust
 use jsonsql::pool::{Pool, build_basic_pool};
 use jsonsql::read::{get_json_by_id};
@@ -92,7 +92,7 @@ let return_value: Result<String, String> = get_json_by_id("2", "account_data", s
 println!("My Outcome Looks Like: {}", return_value.unwrap());`
 ```
 
-Raw Query:
+**Raw Query:**
 ```rust
 use jsonsql::pool::{Pool, build_basic_pool};
 use jsonsql::read::{get_by_raw};
@@ -115,7 +115,7 @@ There are currently 3 primary methods to write to a Database using this library.
 - json_write_to_table -> takes a JSON String containing key/value pairs to write, a table ( as a String ), + a pool connection.
 - raw_write_to_table -> takes a raw MySQL Insert statement ( as a String ) + a pool connection. Executes the raw statement assuming proper syntax.
 
-Using a Vec to Write to Table:
+**Using a Vec to Write to Table:**
 ```rust
 use jsonsql::pool::{Pool, build_basic_pool};
 use jsonsql::write::{vec_write_to_table};
@@ -132,7 +132,7 @@ let return_value: Result<SqlWriteReturn, String> = vec_write_to_table(tuple_vec,
 println!("My Confirmation Data Looks Like: {}", return_value.unwrap());
 ```
 
-Using JSON to Write to Table:
+**Using JSON to Write to Table:**
 ```rust
 use jsonsql::pool::{Pool, build_basic_pool};
 use jsonsql::write::{json_write_to_table};
@@ -145,7 +145,7 @@ let return_value: Result<SqlWriteReturn, String> = json_write_to_table(json_stri
 println!("My Confirmation Data Looks Like: {}", return_value.unwrap());
 ```
 
-Raw Query:
+**Raw Query:**
 ```rust
 use jsonsql::pool::{Pool, build_basic_pool};
 use jsonsql::write::{raw_write_to_table};
