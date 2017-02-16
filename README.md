@@ -112,7 +112,7 @@ let return_value: Result<String, String> = get_by_raw(sql, simple_pool);
 println!("My Outcome Looks Like: {}", return_value.unwrap());
 ```
 
-> **NOTE** All queries return Results that must be unwrapped and may contain and error if the query process failed at any point.
+> **NOTE** All queries return Results that must be unwrapped and may contain an error if the query process failed at any point.
 
 
 ## Write Information:
