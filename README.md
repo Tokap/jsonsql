@@ -155,10 +155,11 @@ use jsonsql::write::{json_write_to_table};
 
 let table: String = String::from("account_data");
 let json_string: String = String::from(
-                                      r#" {
+                                r#" {
                                       "first_name": "bob",
                                       "last_name": "smith",
-                                      "age": "25" } "#);
+                                      "age": "25"
+                                    } "#);
 
 let simple_pool: Pool = build_basic_pool("some_hostname", "my_database", "user", "password", 3306);
 let return_value: Result<SqlWriteReturn, String> = json_write_to_table(json_string, table, simple_pool);
