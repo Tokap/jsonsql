@@ -1,19 +1,26 @@
 # jsonsql
 
-A mysql abstraction for basic get and insert interactions using json as the primary means of information transfer.
+A MySQL abstraction for basic select and insert interactions using json as the primary means of information transfer.
 
 > **NOTE** This is an alpha build and will experience rapid change.
 
 ## Setup:
 
-In your project's Cargo.toml file, add the following under [dependencies]:
+Update dependencies:
+```rust
+// Cargo.toml
+[dependencies]
 `jsonsql = {version = "*", git = "https://github.com/Tokap/jsonsql" }`
-
+```
 Run: `cargo build`
-then, add: `extern crate jsonsql;` to your main.rs file.
+
+Update main file:
+```rust
+// main.rs
+`extern crate jsonsql;`
+```
 
 ## Quick Summary:
-
 This library is broken into modules based on individual purpose. The modules currently include:
   - pool
   - read
@@ -32,7 +39,7 @@ let simple_pool: Pool = build_basic_pool("some_hostname", "my_database", "user",
 ```
 
 If a user has a String of JSON data, they may pass it in as an argument to build_pool_json. This function is flexible and permits the user to omit key/value information for options not being used.
-The list of available options for Pool config when passing the options through JSON are:
+The list of available options for Pool config when passing them through JSON are:
 - hostname
 - port
 - db
@@ -53,10 +60,10 @@ let pool_from_json: Pool = build_pool_json("some_hostname", "my_database", "user
 ## Read Information:
 
 There are currently 4 methods to read from the Database using this library. They are:
-- get_by_param -> takes 4 parameters: a search key (i.e 'name'), a search value (i.e. 'bob'), and a table as &str + a pool connection.
-- get_by_two_params -> takes 4 parameters: two key/value tuples of &str, a table as &str + a pool connection.
-- get_json_by_id -> a common query request. It takes 3 parameters - the id and table as &str + a pool connection.
-- get_by_raw -> takes a raw MySQL Select statement ( as a String ) and a pool connection. Executes the raw statement assuming proper syntax.
+- `get_by_param` -> takes 4 parameters: a search key (i.e 'name'), a search value (i.e. 'bob'), and a table as &str + a pool connection.
+- `get_by_two_params` -> takes 4 parameters: two key/value tuples of &str, a table as &str + a pool connection.
+- `get_json_by_id` -> a common query request. It takes 3 parameters - the id and table as &str + a pool connection.
+- `get_by_raw` -> takes a raw MySQL Select statement ( as a String ) and a pool connection. Executes the raw statement assuming proper syntax.
 
 **Get By Param:**
 ```rust
@@ -111,9 +118,9 @@ println!("My Outcome Looks Like: {}", return_value.unwrap());
 ## Write Information:
 
 There are currently 3 primary methods to write to a Database using this library. They are:
-- vec_write_to_table -> takes a Vector of Tuples (String, String) containing key/value pairs to write to table, a table ( as a String ) + a pool connection.
-- json_write_to_table -> takes a JSON String containing key/value pairs to write, a table ( as a String ), + a pool connection.
-- raw_write_to_table -> takes a raw MySQL Insert statement ( as a String ) + a pool connection. Executes the raw statement assuming proper syntax.
+- `vec_write_to_table` -> takes a Vector of Tuples (String, String) containing key/value pairs to write to table, a table ( as a String ) + a pool connection.
+- `json_write_to_table` -> takes a JSON String containing key/value pairs to write, a table ( as a String ), + a pool connection.
+- `raw_write_to_table` -> takes a raw MySQL Insert statement ( as a String ) + a pool connection. Executes the raw statement assuming proper syntax.
 
 **Using a Vec to Write to Table:**
 ```rust
