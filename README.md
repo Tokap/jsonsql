@@ -63,7 +63,7 @@ There are currently 4 methods to read from the Database using this library. They
 - `get_by_param` -> takes 4 parameters: a search key (i.e 'name'), a search value (i.e. 'bob'), and a table as &str + a pool connection.
 - `get_by_two_params` -> takes 4 parameters: two key/value tuples of &str, a table as &str + a pool connection.
 - `get_json_by_id` -> a common query request. It takes 3 parameters - the id and table as &str + a pool connection.
-- `get_by_raw` -> takes a raw MySQL Select statement ( as a String ) and a pool connection. Executes the raw statement assuming proper syntax.
+- `get_by_raw` -> takes a raw MySQL Select statement as a String + a pool connection. Executes the raw statement assuming proper syntax.
 
 **Get By Param:**
 ```rust
@@ -75,6 +75,7 @@ let simple_pool: Pool = build_basic_pool("some_hostname", "my_database", "user",
 let return_value: Result<String, String> = get_by_param("name", "bob", "account_data", simple_pool);
 
 println!("My Outcome Looks Like: {}", return_value.unwrap());
+// "[{"id":"1","name":"bob","address":"123 Front Street"}]"
 ```
 
 **Get By Two Params:**
@@ -86,6 +87,7 @@ let simple_pool: Pool = build_basic_pool("some_hostname", "my_database", "user",
 let return_value: Result<String, String> = get_by_two_params(("name", "bob"),("id", "1"), "account_data", simple_pool);
 
 println!("My Outcome Looks Like: {}", return_value.unwrap());`
+// "[{"id":"1","name":"bob","address":"123 Front Street"}]"
 ```
 
 **Get By Id:**
@@ -97,6 +99,7 @@ let simple_pool: Pool = build_basic_pool("some_hostname", "my_database", "user",
 let return_value: Result<String, String> = get_json_by_id("2", "account_data", simple_pool);
 
 println!("My Outcome Looks Like: {}", return_value.unwrap());`
+// "[{"id":"2","name":"jerry","address":"456 Front Street"}]"
 ```
 
 **Raw Query:**
@@ -110,6 +113,7 @@ let sql: String = "SELECT * FROM ..."
 let return_value: Result<String, String> = get_by_raw(sql, simple_pool);
 
 println!("My Outcome Looks Like: {}", return_value.unwrap());
+// "[{"id":"1","name":"bob","address":"123 Front Street"}, {"id":"2","name":"jerry","address":"456 Front Street"}]"
 ```
 
 > **NOTE** All queries return Results that must be unwrapped and may contain an error if the query process failed at any point.
