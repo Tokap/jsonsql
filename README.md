@@ -40,12 +40,13 @@ The list of available options for Pool config when passing the options through J
 - password
 - socket
 
-`use jsonsql::pool::{Pool, build_basic_pool};
+```rust
+use jsonsql::pool::{Pool, build_basic_pool};
 
 let json_string: String = r#" { "hostname": "127.0.0.1", "db": "my_database", "user": "some_user", "password": "mediocre_password"  } "#;
 
 let pool_from_json: Pool = build_pool_json("some_hostname", "my_database", "user", "password", 3306);
-`
+```
 
 > **NOTE** Although a user can construct a JSON string manually as shown above, there are multiple rust crates that make JSON creation simple and allow you to easily manipulate the results.
 
@@ -58,34 +59,42 @@ There are currently 4 methods to read from the Database using this library. They
 - get_by_raw -> takes a raw MySQL Select statement ( as a String ) and a pool connection. Executes the raw statement assuming proper syntax.
 
 Get By Param:
-`use jsonsql::pool::{Pool, build_basic_pool};
+```rust
+use jsonsql::pool::{Pool, build_basic_pool};
 use jsonsql::read::{get_by_param};
+
 
 let simple_pool: Pool = build_basic_pool("some_hostname", "my_database", "user", "password", 3306);
 let return_value: Result<String, String> = get_by_param("name", "bob", "account_data", simple_pool);
 
-println!("My Outcome Looks Like: {}", return_value.unwrap());`
+println!("My Outcome Looks Like: {}", return_value.unwrap());
+```
 
 Get By Two Params:
-`use jsonsql::pool::{Pool, build_basic_pool};
+```rust
+use jsonsql::pool::{Pool, build_basic_pool};
 use jsonsql::read::{get_by_two_params};
 
 let simple_pool: Pool = build_basic_pool("some_hostname", "my_database", "user", "password", 3306);
 let return_value: Result<String, String> = get_by_two_params(("name", "bob"),("id", "1"), "account_data", simple_pool);
 
 println!("My Outcome Looks Like: {}", return_value.unwrap());`
+```
 
 Get By Id:
-`use jsonsql::pool::{Pool, build_basic_pool};
+```rust
+use jsonsql::pool::{Pool, build_basic_pool};
 use jsonsql::read::{get_json_by_id};
 
 let simple_pool: Pool = build_basic_pool("some_hostname", "my_database", "user", "password", 3306);
 let return_value: Result<String, String> = get_json_by_id("2", "account_data", simple_pool);
 
 println!("My Outcome Looks Like: {}", return_value.unwrap());`
+```
 
 Raw Query:
-`use jsonsql::pool::{Pool, build_basic_pool};
+```rust
+use jsonsql::pool::{Pool, build_basic_pool};
 use jsonsql::read::{get_by_raw};
 
 let simple_pool: Pool = build_basic_pool("some_hostname", "my_database", "user", "password", 3306);
@@ -93,7 +102,8 @@ let sql: String = "SELECT * FROM ..."
 
 let return_value: Result<String, String> = get_by_raw(sql, simple_pool);
 
-println!("My Outcome Looks Like: {}", return_value.unwrap());`
+println!("My Outcome Looks Like: {}", return_value.unwrap());
+```
 
 > **NOTE** All queries return Results that must be unwrapped and may contain and error if the query process failed at any point.
 
@@ -106,7 +116,8 @@ There are currently 3 primary methods to write to a Database using this library.
 - raw_write_to_table -> takes a raw MySQL Insert statement ( as a String ) + a pool connection. Executes the raw statement assuming proper syntax.
 
 Using a Vec to Write to Table:
-`use jsonsql::pool::{Pool, build_basic_pool};
+```rust
+use jsonsql::pool::{Pool, build_basic_pool};
 use jsonsql::write::{vec_write_to_table};
 
 let mut tuple_vec: Vec<(String, String)> = Vec::new();
@@ -118,10 +129,12 @@ let table: String = String::from("account_data");
 let simple_pool: Pool = build_basic_pool("some_hostname", "my_database", "user", "password", 3306);
 let return_value: Result<SqlWriteReturn, String> = vec_write_to_table(tuple_vec, table, simple_pool);
 
-println!("My Confirmation Data Looks Like: {}", return_value.unwrap());`
+println!("My Confirmation Data Looks Like: {}", return_value.unwrap());
+```
 
 Using JSON to Write to Table:
-`use jsonsql::pool::{Pool, build_basic_pool};
+```rust
+use jsonsql::pool::{Pool, build_basic_pool};
 use jsonsql::write::{json_write_to_table};
 
 let table: String = String::from("account_data");
@@ -129,10 +142,12 @@ let json_string: String = r#" { "first_name": "bob", "last_name": "smith", "age"
 let simple_pool: Pool = build_basic_pool("some_hostname", "my_database", "user", "password", 3306);
 let return_value: Result<SqlWriteReturn, String> = json_write_to_table(json_string, table, simple_pool);
 
-println!("My Confirmation Data Looks Like: {}", return_value.unwrap());`
+println!("My Confirmation Data Looks Like: {}", return_value.unwrap());
+```
 
 Raw Query:
-`use jsonsql::pool::{Pool, build_basic_pool};
+```rust
+use jsonsql::pool::{Pool, build_basic_pool};
 use jsonsql::write::{raw_write_to_table};
 
 let simple_pool: Pool = build_basic_pool("some_hostname", "my_database", "user", "password", 3306);
@@ -140,6 +155,7 @@ let sql: String = "INSERT INTO ... VALUES ..."
 
 let return_value: Result<SqlWriteReturn, String> = raw_write_to_table(sql, simple_pool);
 
-println!("My Confirmation Data Looks Like: {}", return_value.unwrap());`
+println!("My Confirmation Data Looks Like: {}", return_value.unwrap());
+```
 
 > **NOTE** All insert statements return Results containing confirmation details or an error if the insert process failed at any point.
