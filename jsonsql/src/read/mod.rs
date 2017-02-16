@@ -5,15 +5,14 @@ use json;
 /***************** Support Functions ******************/
 /*****************************************************/
 
-#[allow(dead_code)]
 pub fn get_col_names(query_result: &QueryResult) -> Vec<String> {
 
-    let column_hash_map = query_result.column_indexes(); // Split col names to hashmap
-    let mut col_tuple_vec: Vec<(String, usize)> = Vec::new(); // Vec<(column_name, idx)>
-    let mut col_name_vec: Vec<String> = Vec::new(); // Final Vec for return
+    let column_hash_map = query_result.column_indexes();
+    let mut col_tuple_vec: Vec<(String, usize)> = Vec::new();
+    let mut col_name_vec: Vec<String> = Vec::new();
 
     for (name, idx) in column_hash_map.iter() {
-        col_tuple_vec.push( (name.to_string(), *idx) ) // make tuples w/ col name & index
+        col_tuple_vec.push( (name.to_string(), *idx) )
     }
     col_tuple_vec.sort_by(|a,b| a.1.cmp(&b.1));
 
@@ -32,10 +31,18 @@ pub fn make_get_statement(
     search_value: &str,
     table: &str,) -> String {
 
-        format!("SELECT * FROM `{}` WHERE `{}`={}", table, search_key, search_value)
+        format!("SELECT * FROM `{}` WHERE `{}`='{}'", table, search_key, search_value)
 }
 
-#[allow(dead_code)]
+pub fn make_get_statement_2(
+    search_cond_one: (&str, &str),
+    search_cond_two: (&str, &str),
+    table: &str,) -> String {
+
+        format!("SELECT * FROM `{}` WHERE `{}`='{}' AND `{}`='{}'",
+        table, search_cond_one.0, search_cond_one.1, search_cond_two.0, search_cond_two.1)
+}
+
 pub fn get_by_raw(
     sql: String,
     pool: Pool,) -> Result<String, String> {
@@ -51,7 +58,6 @@ pub fn get_by_raw(
         .map(|query_result| {
             let col_name_vec: Vec<String> = get_col_names(&query_result);
 
-            // Create Vector of Vec<String> holding value on each row w/o keys
             for row in query_result {
                 let unwrapped = row.unwrap().unwrap();
                 let mut row_returns: Vec<String> = Vec::new();
@@ -63,7 +69,6 @@ pub fn get_by_raw(
                 all_row_values.push(row_returns);
             }
 
-            // Go through each row's content, assign it a key with col names & create JSON
             for row_contents in all_row_values {
 
                 let mut data_object = json::JsonValue::new_object();
@@ -87,7 +92,6 @@ pub fn get_by_raw(
 //*********** Combined Read Functions *****************/
 //****************************************************/
 
-#[allow(dead_code)]
 pub fn get_by_param(
     search_key: &str,
     search_value: &str,
@@ -98,7 +102,16 @@ pub fn get_by_param(
         get_by_raw(sql, pool)
 }
 
-#[allow(dead_code)]
+pub fn get_by_two_params(
+    search_cond_one: (&str, &str),
+    search_cond_two: (&str, &str),
+    table: &str,
+    pool: Pool,) -> Result<String, String> {
+
+        let sql: String = make_get_statement_2(search_cond_one, search_cond_two, table);
+        get_by_raw(sql, pool)
+}
+
 pub fn get_json_by_id(
   search_value: &str,
   table: &str,

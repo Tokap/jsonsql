@@ -16,7 +16,6 @@ pub struct SqlWriteReturn {
 /**************** Core Write Functions ****************/
 /*****************************************************/
 
-#[allow(dead_code)]
 pub fn simple_json_insert(
     table: String,
     json: String ) -> String {
@@ -30,8 +29,6 @@ pub fn simple_json_insert(
         let keys_and_values: json::object::Iter = json_obj.entries();
 
         for i in keys_and_values {
-            println!("Key/Value Pairs: {:?}", i);
-            println!("Value: {:?}", i.1);
             key_vec.push(i.0.to_string());
             value_vec.push(format!("'{}'",i.1));
         }
@@ -43,7 +40,6 @@ pub fn simple_json_insert(
 
 }
 
-#[allow(dead_code)]
 pub fn simple_vec_insert(
     table: String,
     params: Vec<(String, String)> ) -> String {
@@ -80,7 +76,6 @@ pub fn simple_vec_insert(
 
 }
 
-#[allow(dead_code)]
 pub fn write_to_table(
     sql: String,
     pool: Pool,) -> Result<SqlWriteReturn, String> {
@@ -104,7 +99,6 @@ pub fn write_to_table(
  //************* Combined Write Functions **************/
 //*****************************************************/
 
-#[allow(dead_code)]
 pub fn vec_write_to_table(
     table: String,
     params: Vec<(String, String)>,
@@ -114,7 +108,6 @@ pub fn vec_write_to_table(
         write_to_table(sql, pool)
 }
 
-#[allow(dead_code)]
 pub fn json_write_to_table(
     table: String,
     params: String,
@@ -124,9 +117,7 @@ pub fn json_write_to_table(
         write_to_table(sql, pool)
 }
 
-#[allow(dead_code)]
 pub fn raw_write_to_table(
-    table: String,
     sql: String,
     pool: Pool) -> Result<SqlWriteReturn, String> {
 
