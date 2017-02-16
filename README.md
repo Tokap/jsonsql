@@ -26,7 +26,8 @@ Different functions are provided for Pool construction. A user may input the req
 The example below shows an itemized Pool creation. If a field is not required/available, a "" may be used instead. (except for the port number, where a 0 should be used in place of a value)
 
 `use jsonsql::pool::{Pool, build_basic_pool};
-    let simple_pool: Pool = build_basic_pool("some_hostname", "my_database", "user", "password", 3306);
+
+let simple_pool: Pool = build_basic_pool("some_hostname", "my_database", "user", "password", 3306);
 `
 If a user has a String of JSON data, they may pass it in as an argument to build_pool_json. This function is flexible and permits the user to omit key/value information for options not being used.
 The list of available options for Pool config when passing the options through JSON are:
@@ -38,9 +39,10 @@ The list of available options for Pool config when passing the options through J
 - socket
 
 `use jsonsql::pool::{Pool, build_basic_pool};
-    let json_string: String = r#" { "hostname": "127.0.0.1", "db": "my_database", "user": "some_user", "password": "mediocre_password"  } "#;
 
-    let pool_from_json: Pool = build_pool_json("some_hostname", "my_database", "user", "password", 3306);
+let json_string: String = r#" { "hostname": "127.0.0.1", "db": "my_database", "user": "some_user", "password": "mediocre_password"  } "#;
+
+let pool_from_json: Pool = build_pool_json("some_hostname", "my_database", "user", "password", 3306);
 `
 
 > **NOTE** Although a user can construct a JSON string manually as shown above, there are multiple rust crates that make JSON creation simple and allow you to easily manipulate the results.
@@ -97,8 +99,45 @@ println!("My Outcome Looks Like: {}", return_value.unwrap());`
 ## Write Information:
 
 There are currently 3 primary methods to write to a Database using this library. They are:
-- vec_write_to_table -> takes a table, a Vector of Tuples (String, String) containing key/value pairs to write to table, and a pool connection.
-- json_write_to_table -> takes a table, a JSON String containing key/value pairs to write to table, and a pool connection.
-- raw_write_to_table -> takes a raw MySQL Insert statement ( as a String ) and a pool connection. Executes the raw statement assuming proper syntax.
+- vec_write_to_table -> takes a Vector of Tuples (String, String) containing key/value pairs to write to table, a table ( as a String ) + a pool connection.
+- json_write_to_table -> takes a JSON String containing key/value pairs to write, a table ( as a String ), + a pool connection.
+- raw_write_to_table -> takes a raw MySQL Insert statement ( as a String ) + a pool connection. Executes the raw statement assuming proper syntax.
+
+Using a Vec to Write to Table:
+`use jsonsql::pool::{Pool, build_basic_pool};
+use jsonsql::write::{vec_write_to_table};
+
+let mut tuple_vec: Vec<(String, String)> = Vec::new();
+    tuple_vec.push(("first_name".to_string(), "bob".to_string()));
+    tuple_vec.push(("last_name".to_string(), "smith".to_string()));
+    tuple_vec.push(("age".to_string(), "25".to_string()));
+
+let table: String = String::from("account_data");
+let simple_pool: Pool = build_basic_pool("some_hostname", "my_database", "user", "password", 3306);
+let return_value: Result<SqlWriteReturn, String> = vec_write_to_table(tuple_vec, table, simple_pool);
+
+println!("My Confirmation Data Looks Like: {}", return_value.unwrap());`
+
+Using JSON to Write to Table:
+`use jsonsql::pool::{Pool, build_basic_pool};
+use jsonsql::write::{json_write_to_table};
+
+let table: String = String::from("account_data");
+let json_string: String = r#" { "first_name": "bob", "last_name": "smith", "age": "25" } "#;
+let simple_pool: Pool = build_basic_pool("some_hostname", "my_database", "user", "password", 3306);
+let return_value: Result<SqlWriteReturn, String> = json_write_to_table(json_string, table, simple_pool);
+
+println!("My Confirmation Data Looks Like: {}", return_value.unwrap());`
+
+Raw Query:
+`use jsonsql::pool::{Pool, build_basic_pool};
+use jsonsql::write::{raw_write_to_table};
+
+let simple_pool: Pool = build_basic_pool("some_hostname", "my_database", "user", "password", 3306);
+let sql: String = "INSERT INTO ... VALUES ..."
+
+let return_value: Result<SqlWriteReturn, String> = raw_write_to_table(sql, simple_pool);
+
+println!("My Confirmation Data Looks Like: {}", return_value.unwrap());`
 
 > **NOTE** All insert statements return Results containing confirmation details or an error if the insert process failed at any point.
