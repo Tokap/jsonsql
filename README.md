@@ -17,7 +17,7 @@ Run: `cargo build`
 Update main file:
 ```rust
 // main.rs
-`extern crate jsonsql;`
+extern crate jsonsql;
 ```
 
 ## Quick Summary:
