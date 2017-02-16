@@ -10,7 +10,7 @@ Update dependencies:
 ```rust
 // Cargo.toml
 [dependencies]
-`jsonsql = {version = "*", git = "https://github.com/Tokap/jsonsql" }`
+jsonsql = {version = "*", git = "https://github.com/Tokap/jsonsql" }
 ```
 Run: `cargo build`
 
@@ -50,9 +50,13 @@ The list of available options for Pool config when passing them through JSON are
 ```rust
 use jsonsql::pool::{Pool, build_basic_pool};
 
-let json_string: String = r#" { "hostname": "127.0.0.1", "db": "my_database", "user": "some_user", "password": "mediocre_password"  } "#;
+let json_string: String = String::from(r#" { "hostname": "127.0.0.1",
+                                "db": "my_database",
+                                "user": "some_user",
+                                "password": "mediocre_password"  
+                              } "#);
 
-let pool_from_json: Pool = build_pool_json("some_hostname", "my_database", "user", "password", 3306);
+let pool_from_json: Pool = build_pool_json(json_string);
 ```
 
 > **NOTE** Although a user can construct a JSON string manually as shown above, there are multiple rust crates that make JSON creation simple and allow you to easily manipulate the results.
@@ -149,7 +153,11 @@ use jsonsql::pool::{Pool, build_basic_pool};
 use jsonsql::write::{json_write_to_table};
 
 let table: String = String::from("account_data");
-let json_string: String = r#" { "first_name": "bob", "last_name": "smith", "age": "25" } "#;
+let json_string: String = String::from(r#" {
+                                      "first_name": "bob",
+                                      "last_name": "smith",
+                                      "age": "25" } "#);
+                                      
 let simple_pool: Pool = build_basic_pool("some_hostname", "my_database", "user", "password", 3306);
 let return_value: Result<SqlWriteReturn, String> = json_write_to_table(json_string, table, simple_pool);
 
