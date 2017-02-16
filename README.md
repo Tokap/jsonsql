@@ -10,7 +10,7 @@ Update dependencies:
 ```rust
 // Cargo.toml
 [dependencies]
-jsonsql = {version = "*", git = "https://github.com/Tokap/jsonsql" }
+jsonsql = { version = "*", git = "https://github.com/Tokap/jsonsql" }
 ```
 Run: `cargo build`
 
