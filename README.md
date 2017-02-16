@@ -4,13 +4,13 @@ A mysql abstraction for basic get and insert interactions using json as the prim
 
 > **NOTE** This is an alpha build and will experience rapid change.
 
-## Setup
+## Setup:
 
 In your project's Cargo.toml file, add the following under [dependencies]:
 `jsonsql = {version = "*", git = "https://github.com/Tokap/jsonsql" }`
 
 Run: `cargo build`
-Add: `extern crate jsonsql;` to your main.rs file.
+then, add: `extern crate jsonsql;` to your main.rs file.
 
 ## Quick Summary:
 
@@ -25,10 +25,12 @@ More modules will be added as functionality expands.
 Different functions are provided for Pool construction. A user may input the required fields individually or as a JSON string based on the fn being used.
 The example below shows an itemized Pool creation. If a field is not required/available, a "" may be used instead. (except for the port number, where a 0 should be used in place of a value)
 
-`use jsonsql::pool::{Pool, build_basic_pool};
+```rust
+use jsonsql::pool::{Pool, build_basic_pool};
 
 let simple_pool: Pool = build_basic_pool("some_hostname", "my_database", "user", "password", 3306);
-`
+```
+
 If a user has a String of JSON data, they may pass it in as an argument to build_pool_json. This function is flexible and permits the user to omit key/value information for options not being used.
 The list of available options for Pool config when passing the options through JSON are:
 - hostname
