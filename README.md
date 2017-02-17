@@ -1,6 +1,6 @@
 # jsonsql
 
-A MySQL abstraction for basic select and insert interactions using json as the primary means of information transfer.
+A MySQL abstraction for Rust providing basic select and insert interactions using json as the primary means of information transfer.
 
 > **NOTE** This is an alpha build and will experience rapid change.
 
