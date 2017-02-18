@@ -46,6 +46,7 @@ pub fn build_basic_pool_with_tcp_test(
     connection_timeout: u64) -> Result<Pool, String> {
 
         let tcp_ints: Vec<u8> = hostname.clone().split(".").map(|x| x.parse::<u8>().unwrap()).collect();
+        println!("TCP Ints: {:?}", tcp_ints);
         if tcp_ints.len() != 4 { return Err( String::from("Invalid tcp address: wrong number of integer breaks")) }
 
         // Connection Attempt:
