@@ -7,7 +7,9 @@ use std::str::FromStr;
 use std::net::TcpStream;
 use std::time::Duration;
 use std::net::{IpAddr, Ipv4Addr, SocketAddr};
-use self::conntest::{tcp_connect_with_timeout, ConnectionError};
+use self::conntest::tcp_connect_with_timeout;
+use self::conntest::ConnectionError;
+
 
 /*******************************************************/
 /************** Creating a Pool Connection ************/
