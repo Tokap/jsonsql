@@ -5,9 +5,11 @@ use mysql;
 use json;
 use std::str::FromStr;
 
+use std::net::TcpStream;
 use std::time::Duration;
 use std::net::{IpAddr, Ipv4Addr, SocketAddr};
 use self::conntest::tcp_connect_with_timeout;
+use self::error::ConnectionError;
 
 
 /*******************************************************/
@@ -51,7 +53,7 @@ pub fn build_basic_pool_with_tcp_test(
         let five_seconds = Duration::new(connection_timeout, 0);
         let ip_address = IpAddr::V4(Ipv4Addr::new(tcp_ints[0], tcp_ints[1], tcp_ints[2], tcp_ints[3]));
         let socket = SocketAddr::new(ip_address, 20133);
-        let connect_attempt = tcp_connect_with_timeout(socket, five_seconds);
+        let connect_attempt: Result<TcpStream, ConnectionError> = tcp_connect_with_timeout(socket, five_seconds);
 
         if connect_attempt.is_err() == false {
             // If test is Ok, Build Pool Connection

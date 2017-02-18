@@ -7,7 +7,7 @@ use nix;
 
 use jsonsql::pool::error::ConnectionError;
 
-pub fn tcp_connect_with_timeout(socket_addr: std::net::SocketAddr, timeout: Duration) -> Result<TcpStream, ConnectionError> {
+pub fn tcp_connect_with_timeout(socket_addr: SocketAddr, timeout: Duration) -> Result<TcpStream, ConnectionError> {
   // Create a socket file descriptor.
   let socket_fd = try!(nix::sys::socket::socket(
     nix::sys::socket::AddressFamily::Inet,
