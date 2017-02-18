@@ -1,5 +1,4 @@
 mod conntest;
-mod error;
 
 use mysql;
 use json;
