@@ -7,4 +7,3 @@ publish = true
 [dependencies]
 mysql = "*"
 json  = "*"
-nix = { git = "https://github.com/Tokap/nix-rust", branch = "add-sys-select" }
