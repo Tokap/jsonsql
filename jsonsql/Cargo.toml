@@ -1,9 +1,10 @@
 [package]
 name = "jsonsql"
-version = "0.1.1"
+version = "0.1.5"
 authors = ["Patrick Allen <allenpatrick86@gmail.com>"]
 publish = true
 
 [dependencies]
 mysql = "*"
 json  = "*"
+nix = { git = "https://github.com/Tokap/nix-rust", branch = "add-sys-select" }
