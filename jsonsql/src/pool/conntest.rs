@@ -5,7 +5,7 @@ use std::os::unix::io::FromRawFd;
 use std::net::{SocketAddr};
 use nix;
 
-use error::ConnectionError;
+use self::pool::error::ConnectionError;
 
 pub fn tcp_connect_with_timeout(socket_addr: SocketAddr, timeout: Duration) -> Result<TcpStream, ConnectionError> {
   // Create a socket file descriptor.
