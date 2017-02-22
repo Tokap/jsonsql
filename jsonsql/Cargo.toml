@@ -1,6 +1,6 @@
 [package]
 name = "jsonsql"
-version = "0.1.5"
+version = "0.2.5"
 authors = ["Patrick Allen <allenpatrick86@gmail.com>"]
 publish = true
 
