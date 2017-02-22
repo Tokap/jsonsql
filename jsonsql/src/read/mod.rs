@@ -45,7 +45,7 @@ pub fn make_get_statement_2(
 
 pub fn get_by_raw(
     sql: String,
-    pool: Pool,) -> Result<String, String> {
+    pool: &mut Pool,) -> Result<String, String> {
 
         let mut conn = pool.get_conn().unwrap();
 
@@ -96,7 +96,7 @@ pub fn get_by_param(
     search_key: &str,
     search_value: &str,
     table: &str,
-    pool: Pool,) -> Result<String, String> {
+    pool: &mut Pool,) -> Result<String, String> {
 
         let sql: String = make_get_statement(search_key, search_value, table);
         get_by_raw(sql, pool)
@@ -106,7 +106,7 @@ pub fn get_by_two_params(
     search_cond_one: (&str, &str),
     search_cond_two: (&str, &str),
     table: &str,
-    pool: Pool,) -> Result<String, String> {
+    pool: &mut Pool,) -> Result<String, String> {
 
         let sql: String = make_get_statement_2(search_cond_one, search_cond_two, table);
         get_by_raw(sql, pool)
@@ -115,7 +115,7 @@ pub fn get_by_two_params(
 pub fn get_by_id(
   search_value: &str,
   table: &str,
-  pool: Pool,) -> Result<String, String> {
+  pool: &mut Pool,) -> Result<String, String> {
 
       get_by_param("id", search_value, table, pool)
 }
