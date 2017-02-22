@@ -77,7 +77,7 @@ use jsonsql::read::{get_by_param};
 
 
 let simple_pool: Pool = build_basic_pool("some_hostname", "my_database", "user", "password", 3306);
-let return_value: Result<String, String> = get_by_param("name", "bob", "account_data", &mut simple_pool);
+let return_value: Result<String, String> = get_by_param("name", "bob", "account_data", &simple_pool);
 
 println!("My Outcome Looks Like: {}", return_value.unwrap());
 // "[{"id":"1","name":"bob","address":"123 Front Street"}]"
@@ -89,7 +89,7 @@ use jsonsql::pool::{Pool, build_basic_pool};
 use jsonsql::read::{get_by_two_params};
 
 let simple_pool: Pool = build_basic_pool("some_hostname", "my_database", "user", "password", 3306);
-let return_value: Result<String, String> = get_by_two_params(("name", "bob"),("id", "1"), "account_data", &mut simple_pool);
+let return_value: Result<String, String> = get_by_two_params(("name", "bob"),("id", "1"), "account_data", &simple_pool);
 
 println!("My Outcome Looks Like: {}", return_value.unwrap());`
 // "[{"id":"1","name":"bob","address":"123 Front Street"}]"
@@ -101,7 +101,7 @@ use jsonsql::pool::{Pool, build_basic_pool};
 use jsonsql::read::{get_by_id};
 
 let simple_pool: Pool = build_basic_pool("some_hostname", "my_database", "user", "password", 3306);
-let return_value: Result<String, String> = get_by_id("2", "account_data", &mut simple_pool);
+let return_value: Result<String, String> = get_by_id("2", "account_data", &simple_pool);
 
 println!("My Outcome Looks Like: {}", return_value.unwrap());`
 // "[{"id":"2","name":"jerry","address":"456 Front Street"}]"
@@ -115,7 +115,7 @@ use jsonsql::read::{get_by_raw};
 let simple_pool: Pool = build_basic_pool("some_hostname", "my_database", "user", "password", 3306);
 let sql: String = "SELECT * FROM ..."
 
-let return_value: Result<String, String> = get_by_raw(sql, &mut simple_pool);
+let return_value: Result<String, String> = get_by_raw(sql, &simple_pool);
 
 println!("My Outcome Looks Like: {}", return_value.unwrap());
 // "[{"id":"1","name":"bob","address":"123 Front Street"}, {"id":"2","name":"jerry","address":"456 Front Street"}]"
@@ -143,7 +143,7 @@ let mut tuple_vec: Vec<(String, String)> = Vec::new();
 
 let table: String = String::from("account_data");
 let simple_pool: Pool = build_basic_pool("some_hostname", "my_database", "user", "password", 3306);
-let return_value: Result<SqlWriteReturn, String> = vec_write_to_table(tuple_vec, table, &mut simple_pool);
+let return_value: Result<SqlWriteReturn, String> = vec_write_to_table(tuple_vec, table, &simple_pool);
 
 println!("My Confirmation Data Looks Like: {}", return_value.unwrap());
 ```
@@ -162,7 +162,7 @@ let json_string: String = String::from(
                                     } "#);
 
 let simple_pool: Pool = build_basic_pool("some_hostname", "my_database", "user", "password", 3306);
-let return_value: Result<SqlWriteReturn, String> = json_write_to_table(json_string, table, &mut simple_pool);
+let return_value: Result<SqlWriteReturn, String> = json_write_to_table(json_string, table, &simple_pool);
 
 println!("My Confirmation Data Looks Like: {}", return_value.unwrap());
 ```
@@ -175,7 +175,7 @@ use jsonsql::write::{raw_write_to_table};
 let simple_pool: Pool = build_basic_pool("some_hostname", "my_database", "user", "password", 3306);
 let sql: String = "INSERT INTO ... VALUES ..."
 
-let return_value: Result<SqlWriteReturn, String> = raw_write_to_table(sql, &mut simple_pool);
+let return_value: Result<SqlWriteReturn, String> = raw_write_to_table(sql, &simple_pool);
 
 println!("My Confirmation Data Looks Like: {}", return_value.unwrap());
 ```

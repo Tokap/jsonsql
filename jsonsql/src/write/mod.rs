@@ -78,7 +78,7 @@ pub fn simple_vec_insert(
 
 pub fn write_to_table(
     sql: String,
-    pool: &mut Pool,) -> Result<SqlWriteReturn, String> {
+    pool: &Pool,) -> Result<SqlWriteReturn, String> {
 
         let mut conn = pool.get_conn().unwrap();
 
@@ -102,7 +102,7 @@ pub fn write_to_table(
 pub fn vec_write_to_table(
     params: Vec<(String, String)>,
     table: String,
-    pool: &mut Pool) -> Result<SqlWriteReturn, String> {
+    pool: &Pool) -> Result<SqlWriteReturn, String> {
 
         let sql: String = simple_vec_insert(table, params);
         write_to_table(sql, pool)
@@ -111,7 +111,7 @@ pub fn vec_write_to_table(
 pub fn json_write_to_table(
     params: String,
     table: String,
-    pool: &mut Pool) -> Result<SqlWriteReturn, String> {
+    pool: &Pool) -> Result<SqlWriteReturn, String> {
 
         let sql: String = simple_json_insert(table, params);
         write_to_table(sql, pool)
@@ -119,7 +119,7 @@ pub fn json_write_to_table(
 
 pub fn raw_write_to_table(
     sql: String,
-    pool: &mut Pool) -> Result<SqlWriteReturn, String> {
+    pool: &Pool) -> Result<SqlWriteReturn, String> {
 
         write_to_table(sql, pool)
 }
