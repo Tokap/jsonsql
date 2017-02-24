@@ -7,9 +7,9 @@ use json;
 
 #[derive(Debug, Default, PartialEq, Eq)]
 pub struct SqlWriteReturn {
-    last_save_id: u64,
-    affected_rows: u64,
-    warning_count: u16,
+    pub last_save_id: u64,
+    pub affected_rows: u64,
+    pub warning_count: u16,
 }
 
 /*******************************************************/
